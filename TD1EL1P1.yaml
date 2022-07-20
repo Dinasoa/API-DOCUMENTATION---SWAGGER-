@@ -46,7 +46,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Student'
+                $ref: '#/components/schemas/CreateStudent'
         400:
           description: Bad request 
           
@@ -67,7 +67,10 @@ paths:
       responses:
         200:
           description: Student updated 
-          content: {}
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Student'
         404:
           description: Student not found
           content: {}
@@ -77,12 +80,44 @@ paths:
         - Students
       summary: Update an existing student
       operationId: Update student
+      description: |
+        Possible updates on: 
+        * name : change
+        * address : change
+        * birth_date : change
+        * phoneNumbers : add 
       requestBody:
         description: STUDENTS 
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Student'
+            examples:
+              changeName:
+                summary: Change name
+                description: How to change name and what it does
+                value:
+                  id: 1
+                  name: "New name"
+              ChangeAddress:
+                summary: Change address
+                description: How to change address 
+                value:
+                  id: 1
+                  address: "Ivandry"
+              ChangeNameAndAddress:
+                summary: Change name and address but not all 
+                value: 
+                  name: "Rakoto"
+                  address: "Ivandry"
+              addPhoneNumbers:
+                summary: Add new phone numbers 
+                value:
+                  id: 1
+                  numbers:
+                  - country_code : "+261"
+                    number: "0341126005"
+
           application/xml:
             schema:
               $ref: '#/components/schemas/Student'
@@ -90,12 +125,17 @@ paths:
       responses:
         200: 
           description: Student updated
+          content: 
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Student'
         400:
           description: Invalid ID supplied
           content: {}
         404:
           description: Student not found
-          content: {}
+          
+
          
  /student/{id}:
     get:
@@ -267,6 +307,17 @@ paths:
           
 components:
   schemas:
+  
+    phoneNumbers:
+      type: object
+      properties:
+        country_code:
+          type: string
+          example : "+261"
+        number:
+          type: string
+          example: "0341126005"
+
     CreateStudent:
       type: object
       properties:
@@ -277,14 +328,21 @@ components:
           type: string
           format: date
           example: "2022-01-01"
+
     Student:
       allOf:
         - $ref: '#/components/schemas/CreateStudent'
+        
       type: object
       properties:
         id:
           type: integer
           example: 10
+        phoneNumbers: 
+          type: array
+          items:
+            $ref:  '#/components/schemas/phoneNumbers'
+          
     CreateCourse:
       type: object
       properties:
