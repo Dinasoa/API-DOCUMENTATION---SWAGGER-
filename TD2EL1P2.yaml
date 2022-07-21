@@ -1,0 +1,403 @@
+openapi: 3.0.1
+info:
+  title: STD21028 API
+  description: 'CINEMA STD21028'
+  version: 1.0.0
+servers:
+ - url: https://STD21028.com
+tags: 
+ - name: Films
+ - name: Projection 
+paths:
+
+  /projection:
+    get:
+      tags:
+        - "Projection"
+      operationId: get projection 
+      summary: "Get projection"
+      description: Get all projection
+      responses:
+        200:
+          description: List of projection
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Projection'
+    post:
+      tags:
+        - Projection
+      operationId: create a new projection 
+      summary: create a new projection 
+      description: creaste new projection 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Projection'
+      responses:
+        200:
+          description: List of students
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProjection'
+        400:
+          description: Bad request 
+    
+    patch:
+      tags:
+        - "Projection"
+      summary: Update an existing projection
+      operationId: Update projection
+      description: |
+        Possible updates on: 
+        * titre : change
+        * duree: change
+        * resume : change
+        * realisateur: change
+        * capacitéAccueil : change
+        * heure_diffusion : change
+        * jour_de_projection : change
+        * salle : change
+      requestBody:
+        required: true
+        description: modify something in the projection  
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Film'
+            examples:
+              changeTitre:
+                summary: Change title of the movie
+                description: How to change name and what it does
+                value:
+                  id: 1
+                  titre: "New title"
+              ChangeResume:
+                summary: change resume 
+                description: change resume 
+                value:
+                  id: 1 
+                  resume: new resume
+              ChangeDuree:
+                summary: Change timing
+                description: How to change duree 
+                value:
+                  id: 1
+                  duree: "02:00:00"
+              Realisateur:
+                summary: Change realisateur
+                value: 
+                  realisateur: "Rakoto"
+              capacitéAccueil:
+                summary: Modify the capacity 
+                value:
+                  id: 1
+                  capacityAccueil: 20
+              heure_diffusion:
+                summary: ""
+                value:
+                  id: 1
+                  heure_diffusion: "17:00:00"
+              jour_de_production:
+                summary: ""
+                value:
+                  id: 1
+                  jour_de_projection: "mercredi"
+              Salle:
+                summary: ""
+                value: 
+                  id: 1 
+                  salle: A
+
+
+      responses:
+        200: 
+          description: Projection has been updated
+          content: 
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/CreateProjection'
+        400:
+          description: Projection has not been updated
+
+    put:
+      tags:
+        - "Projection"
+      operationId: modify all
+      summary: "modify all"
+      description: modify all
+      requestBody: 
+        required: true
+        description: "Modify in integrality"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProjection" 
+            
+      responses:
+        200:
+          description: Projection updated in integrality
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/CreateProjection'
+        400:
+          description: Bad request 
+          content: {}
+
+  /projection/{id}:
+  
+    delete:
+        tags:
+          - Projection
+        operationId: deleteFilmProjection
+        summary: Delete a film projection
+        description : Delete projection having the entered id
+        parameters:
+          - name: id
+            in : path
+            schema:
+              type: integer
+              example: 2
+            required: true
+        responses:
+          200:
+            description: Projection deleted successfully
+          400:
+            description: Bad request
+  
+  /films:
+    get:
+      tags:
+       - "Films"
+      operationId: getFilms
+      summary: "Get all films"
+      description: Get all films 
+      responses:
+        200:
+          description: List of films
+          content:
+            application/json:
+              schema:
+                items: 
+                  $ref: '#/components/schemas/Film'
+
+        404:
+          description: "Film not found"
+          content: {}
+
+          
+    put:
+      tags:
+        - "Films"
+      operationId: modify all
+      summary: "modify all"
+      description: modify all
+      requestBody: 
+        required: true
+        description: "Modify in integrality"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Film" 
+            
+      responses:
+        200:
+          description: Film updated in integrality
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Film'
+        404:
+          description: Film not updated 
+          content: {}
+            
+      
+    
+  
+
+    patch:
+      tags:
+        - "Films"
+      summary: Update an existing film
+      operationId: Update student
+      description: |
+        Possible updates on: 
+        * titre : change
+        * duree: change
+        * resume : change
+        * realisateur: change
+        * date_de_sortie: change 
+      requestBody:
+        required: true
+        description: FILMS  
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Film'
+            examples:
+              changeTitre:
+                summary: Change title of the movie
+                description: How to change name and what it does
+                value:
+                  id: 1
+                  titre: "New title"
+              ChangeResume:
+                summary: change resume 
+                description: change resume 
+                value:
+                  id: 1 
+                  resume: new resume
+              ChangeDuree:
+                summary: Change timing
+                description: How to change duree 
+                value:
+                  id: 1
+                  duree: "02:00:00"
+              Realisateur:
+                summary: Change realisateur
+                value: 
+                  realisateur: "Rakoto"
+              date_de_sortie:
+                summary: Modify the posting date 
+                value:
+                  id: 1
+                  date_de_sortie: "20/05/17"
+
+      responses:
+        200: 
+          description: Film has been updated
+          content: 
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Film'
+        404:
+          description: Film has not been updated
+
+  /film/{id}:
+      get:
+        tags:
+          - Films
+        operationId: getFilm
+        summary: Get informations about a specific film
+        description: Get informations of a specific film
+        parameters:
+          - name: id
+            in: path
+            schema:
+              type: integer
+              example: 2
+            required: true
+        responses:
+          200:
+            description : Details of a film 
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Film'
+          400:
+            description: Bad request
+
+      delete:
+            tags:
+              - Films
+            operationId: deleteFIlm
+            summary: Delete a film
+            description : Delete the film having the entered id
+            parameters:
+              - name: id
+                in : path
+                schema:
+                  type: integer
+                  example: 2
+                required: true
+            responses:
+              200:
+                description: Film deleted successfully
+              400:
+                description: Bad request
+      
+
+components:
+  schemas:
+    Salle: 
+      type: object
+      enum:
+        - A
+        - B 
+      properties:
+        capacitéAccueil: 
+          type: integer 
+          example: 20
+    CreateSalle:
+      type: object
+      properties:
+        id:
+          type: integer 
+          example: 1 
+      allOf:
+        - $ref: "#/components/schemas/Salle"
+        
+    CreateFilm: 
+      type: object
+     
+      properties:  
+        titre:
+          type: string
+          example: "Stranger things"
+        duree:
+          type: string
+          example: "01:30:00" 
+        resume:
+          type: string
+          example: "This film is about the upside down"
+        realisateur:
+          type: string
+          example: "Duffer brothers"
+        date_de_sortie:
+          type: string
+          example: "2016-07-21"
+
+    Film: 
+      type: object 
+      allOf:
+        - $ref: "#/components/schemas/CreateFilm"
+      properties:
+        id:
+          type: integer
+          example: 1
+        
+   
+    Projection:
+      allOf:
+        - $ref: "#/components/schemas/CreateFilm" 
+        - $ref: "#/components/schemas/Salle"
+      
+      type: object
+      properties:
+        heure_diffusion: 
+          type: string
+          example: "15:00:00"
+        jour_de_projection:
+          type: string
+          example: "monday"
+
+    CreateProjection:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/Projection"
+      properties:
+        id_salle:
+          type: integer
+          example: 1
+        id_film:
+          type: integer
+          example: 2
+
+
+        
