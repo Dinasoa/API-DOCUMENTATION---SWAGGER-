@@ -355,10 +355,12 @@ components:
   schemas:
     Salle: 
       type: object
-      enum:
-        - A
-        - B 
       properties:
+        salle:
+          type: string
+          enum: 
+            - A 
+            - B
         capacitéAccueil: 
           type: integer 
           example: 20
@@ -428,9 +430,9 @@ components:
       allOf:
         - $ref: "#/components/schemas/Projection"
       properties:
-        id_salle:
-          type: integer
-          example: 1
+        # id_salle:
+        #   type: integer
+        #   example: 1
         id_film:
           type: integer
           example: 2
