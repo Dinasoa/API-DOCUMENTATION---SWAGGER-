@@ -1,14 +1,19 @@
 openapi: 3.0.1
+
 info:
   title: STD21028 API
   description: 'CINEMA STD21028'
   version: 1.0.0
+
 servers:
  - url: https://STD21028.com
+
 tags: 
  - name: Films
  - name: Projection 
+
 paths:
+
 
   /projection:
     get:
@@ -26,6 +31,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Projection'
+
     post:
       tags:
         - Projection
@@ -322,7 +328,29 @@ paths:
               400:
                 description: Bad request
       
-
+  /films/category:
+    get: 
+      tags:
+        - "Films"
+      operationId: get Film order by category 
+      summary: "Get film by category"
+      description: "Get film by category"
+      parameters:
+          - name: category
+            in: path
+            schema:
+              type: string
+              example: horror
+            required: true
+      responses: 
+        200:
+          description: List of films by choosen category
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
 components:
   schemas:
     Salle: 
@@ -372,7 +400,15 @@ components:
           type: integer
           example: 1
         
-   
+    Category:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/Film"
+      properties:
+          category:
+            type: string
+            example: horror
+
     Projection:
       allOf:
         - $ref: "#/components/schemas/CreateFilm" 
