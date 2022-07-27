@@ -430,9 +430,6 @@ components:
       allOf:
         - $ref: "#/components/schemas/Projection"
       properties:
-        # id_salle:
-        #   type: integer
-        #   example: 1
         id_film:
           type: integer
           example: 2
